@@ -1,6 +1,6 @@
 #include <pebble.h>
 	
-enum {
+enum { 
   KEY_TEMPERATURE = 0,
 	KEY_PRICE = 2,
 	KEY_CHANGE = 3,

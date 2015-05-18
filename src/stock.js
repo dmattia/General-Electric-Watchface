@@ -9,28 +9,24 @@ var xhrRequest = function (url, type, callback) {
 
 function getPrice() {
    // Construct URL
-  var url = "http://www.google.com/finance/info?q=NSE:GE";
+  var url = "https://www.kimonolabs.com/api/arjfa2kw?apikey=FS663r7fk01mUFMbpVQbEshFrX90B5N7";
 
   // Send request to OpenWeatherMap
   xhrRequest(url, 'GET', 
     function(responseText) {
-			responseText = responseText.replace(/(\r\n|\n|\r)/gm,"");
-			responseText = responseText.substring(4);
-			responseText = responseText.substring(0,responseText.length-1);
       // responseText contains a JSON object with stock info
       var json = JSON.parse(responseText);
 
       // Get stock price
-			var price = json.l;
+			var price = json.results.collection1[0].current_price;
       console.log("Stock price is " + price);
 			
 			// Get stock change
-			var change = json.c;
+			var changeFloat = parseFloat(price) - parseFloat(json.results.collection1[0].prev_close);
+			var change = json.results.collection1[0].change;
 			var isNegative = 0;
-			console.log("Stock change is " + change);
-			if(parseFloat(change) < 0) {
-				isNegative = 1;
-			}
+			console.log("Stock change is " + changeFloat);
+			if (changeFloat < 0) isNegative = 1;
       
       // Assemble dictionary using our keys
       var dictionary = {
